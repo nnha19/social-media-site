@@ -1,0 +1,12 @@
+@import "/styles/variables";
+.btn {
+  width: 100%;
+  padding: 0.8rem 2rem;
+  background: $primaryColor;
+  color: white;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 9px;
+  font-size: 1.2rem;
+}
