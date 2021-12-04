@@ -8,4 +8,9 @@
     outline: none;
     border: 1px solid black;
   }
+  &Error {
+    color: red;
+    margin-top: 0.5rem;
+    display: block;
+  }
 }

@@ -3,12 +3,22 @@ import Input from "../Share/Input/Input";
 import PrimaryBtn from "../Share/PrimaryBtn/PrimaryBtn";
 import { useRouter } from "next/router";
 import styles from "./Auth.module.scss";
+import { useForm } from "react-hook-form";
 
 interface IProps {
   authMode: "signin" | "signup";
 }
 
 const Auth: React.FC<IProps> = ({ authMode }) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
+
   const router = useRouter();
   const responseFacebook = (response) => {};
 
@@ -24,12 +34,40 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
             Join our community to keep in touch with your friends and loved
             ones.
           </h4>
-          <form className={styles.formField}>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.formField}>
             {authMode === "signup" && (
-              <Input placeholder="Username" name="username" type="text" />
+              <Input
+                register={register}
+                errors={errors}
+                placeholder="Username"
+                name="username"
+                type="text"
+                errorMsg="This field is required"
+                validRules={{ required: true }}
+              />
             )}
-            <Input placeholder="Email" name="email" type="text" />
-            <Input placeholder="Password" name="password" type="password" />
+            <Input
+              register={register}
+              errors={errors}
+              validRules={{
+                required: true,
+                pattern:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              }}
+              placeholder="Email"
+              type="text"
+              name="email"
+              errorMsg="Email must be valid"
+            />
+            <Input
+              register={register}
+              errors={errors}
+              placeholder="Password"
+              name="password"
+              type="password"
+              validRules={{ required: true }}
+              errorMsg="This field is required"
+            />
             <PrimaryBtn>
               {authMode === "signup" ? "Sign Up" : "Sign In"}
             </PrimaryBtn>
