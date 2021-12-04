@@ -1,16 +1,22 @@
 import styles from "./Input.module.scss";
 
 interface IProps {
-  placeholder: string;
+  name: string;
+  placeholder?: string;
   label?: string;
   type: string;
-  name: string;
 }
 
-const Input: React.FC<IProps> = ({ placeholder, label, type, name }) => {
+const Input: React.FC<IProps> = ({ name, placeholder, label, type }) => {
   return (
-    <div className={styles.inputContainer}>
-      <input className={styles.input} type={type} placeholder={placeholder} />
+    <div className={styles.input}>
+      {label && <label htmlFor={name}>{label}</label>}
+      <input
+        className={styles.inputField}
+        type={type}
+        placeholder={placeholder}
+        name={name}
+      />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+
 import styles from "./PrimaryBtn.module.scss";
 
 interface IProps {
@@ -9,9 +10,10 @@ interface IProps {
 
 const PrimaryBtn: React.FC<IProps> = ({ children, className, style }) => {
   return (
-    <button style={style} className={styles.btn + " " + className}>
+    <button style={style} className={`${styles.btn} ${className}`}>
       {children}
     </button>
   );
 };
+
 export default PrimaryBtn;

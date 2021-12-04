@@ -1,0 +1,84 @@
+@import "../../styles/variables";
+
+@mixin orPsuedoStyle {
+  content: "";
+  width: 100%;
+  height: 1px;
+  display: block;
+  background: rgba(70, 69, 69, 0.4);
+}
+
+.container {
+  padding: 2rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+
+  @media (max-width: $lgScreen) {
+    display: none;
+  }
+}
+.auth {
+  width: 70%;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  @media (max-width: $lgScreen) {
+    grid-template-columns: 100%;
+    width: 100%;
+  }
+}
+.form {
+  width: 24rem;
+  margin: 2rem auto;
+  overflow-x: hidden;
+
+  &Header {
+    font-size: 1.4rem;
+    font-weight: normal;
+    margin-bottom: 4rem;
+  }
+
+  @media (max-width: $smScreen) {
+    width: 18rem;
+  }
+}
+.alternative {
+  margin: 2rem 0;
+  &Text {
+    display: grid;
+    grid-template-columns: 50% 1fr 50%;
+    align-items: center;
+    gap: 0.4rem;
+    &::after {
+      @include orPsuedoStyle();
+    }
+    &::before {
+      @include orPsuedoStyle();
+    }
+  }
+}
+
+.fbBtn {
+  width: 100%;
+  padding: 0.8rem 2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background: blue;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+
+  i {
+    margin-right: 1rem;
+  }
+}

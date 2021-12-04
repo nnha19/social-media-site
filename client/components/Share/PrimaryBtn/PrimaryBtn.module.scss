@@ -1,12 +1,18 @@
-@import "/styles/variables";
+@import "../../../styles/variables";
 .btn {
   width: 100%;
-  padding: 0.8rem 2rem;
-  background: $primaryColor;
-  color: white;
-  cursor: pointer;
+  padding: 0.5rem 2rem;
   border: none;
   outline: none;
-  border-radius: 9px;
+  cursor: pointer;
+  background: $primaryColor;
+  color: white;
   font-size: 1.2rem;
+  border: 4px;
+  margin: 0.4rem 0;
+  transition: all 0.4s;
+
+  &:hover {
+    background: darken($primaryColor, 10%);
+  }
 }

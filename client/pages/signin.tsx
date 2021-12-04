@@ -1,6 +1,5 @@
-import SignIn from "../components/SignIn/SignIn";
-const SigninPage = () => {
-  return <SignIn />;
+const Signin = () => {
+  return <div>Sign in page</div>;
 };
 
-export default SigninPage;
+export default Signin;
