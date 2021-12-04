@@ -1,13 +1,16 @@
 import FacebookLogin from "react-facebook-login";
 import Input from "../Share/Input/Input";
 import PrimaryBtn from "../Share/PrimaryBtn/PrimaryBtn";
+import { useRouter } from "next/router";
 import styles from "./Auth.module.scss";
 
-const Auth = () => {
-  const responseFacebook = (response) => {
-    console.log("Hiii.");
-    console.log(response);
-  };
+interface IProps {
+  authMode: "signin" | "signup";
+}
+
+const Auth: React.FC<IProps> = ({ authMode }) => {
+  const router = useRouter();
+  const responseFacebook = (response) => {};
 
   return (
     <div className={styles.container}>
@@ -22,10 +25,14 @@ const Auth = () => {
             ones.
           </h4>
           <form className={styles.formField}>
-            <Input placeholder="Username" name="username" type="text" />
+            {authMode === "signup" && (
+              <Input placeholder="Username" name="username" type="text" />
+            )}
             <Input placeholder="Email" name="email" type="text" />
             <Input placeholder="Password" name="password" type="password" />
-            <PrimaryBtn>Sign Up</PrimaryBtn>
+            <PrimaryBtn>
+              {authMode === "signup" ? "Sign Up" : "Sign In"}
+            </PrimaryBtn>
             <div className={styles.alternative}>
               <span className={styles.alternativeText}>Or</span>
             </div>
@@ -38,6 +45,24 @@ const Auth = () => {
               icon="fa-facebook"
             />
           </form>
+          {authMode === "signup" && (
+            <p className={styles.formChangeMode}>
+              Already a member?
+              <span onClick={() => router.push("/signin")}>Sign In</span>
+            </p>
+          )}
+          {authMode === "signin" && (
+            <p className={styles.formChangeMode}>
+              Don't have an account yet?
+              <span
+                onClick={() =>
+                  router.push(`${authMode === "signin" ? "signup" : "signin"}`)
+                }
+              >
+                Sign Up
+              </span>
+            </p>
+          )}
         </div>
       </div>
     </div>

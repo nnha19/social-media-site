@@ -47,6 +47,19 @@
     margin-bottom: 4rem;
   }
 
+  &ChangeMode {
+    margin-top: 2rem;
+
+    span {
+      color: $primaryColor;
+      margin-left: 0.4rem;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   @media (max-width: $smScreen) {
     width: 18rem;
   }
