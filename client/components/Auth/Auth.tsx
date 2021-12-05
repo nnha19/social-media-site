@@ -4,6 +4,8 @@ import PrimaryBtn from "../Share/PrimaryBtn/PrimaryBtn";
 import { useRouter } from "next/router";
 import styles from "./Auth.module.scss";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useHttp } from "../../customHooks/useHttp";
 
 interface IProps {
   authMode: "signin" | "signup";
@@ -17,10 +19,25 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const { response: user, loading, callApi, error } = useHttp();
+
+  const onSubmit = (data) => {
+    //make http request to api and create/login user
+  };
 
   const router = useRouter();
-  const responseFacebook = (response) => {};
+  const responseFacebook = (response) => {
+    const {
+      accessToken,
+      email,
+      name,
+      picture: {
+        data: { url },
+      },
+    } = response;
+    const data = { accessToken, email, name, url };
+    callApi(`${process.env.REACT_APP_BACKEND_URL}/facebook/auth`, "GET", data);
+  };
 
   return (
     <div className={styles.container}>
