@@ -36,7 +36,11 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
       },
     } = response;
     const data = { accessToken, email, name, url };
-    callApi(`${process.env.REACT_APP_BACKEND_URL}/facebook/auth`, "GET", data);
+    callApi(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/facebook/auth`,
+      "POST",
+      data
+    );
   };
 
   return (
@@ -92,7 +96,7 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
               <span className={styles.alternativeText}>Or</span>
             </div>
             <FacebookLogin
-              appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+              appId={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}
               autoLoad={true}
               fields="name,email,picture"
               callback={responseFacebook}
