@@ -4,10 +4,9 @@ import PrimaryBtn from "../Share/PrimaryBtn/PrimaryBtn";
 import { useRouter } from "next/router";
 import styles from "./Auth.module.scss";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { SpinnerWithBackDrop } from "../Share/Spinner/Spinner";
 import { useHttp } from "../../customHooks/useHttp";
-import { useEffect } from "react";
-
+import Modal from "../Share/Modal/Modal";
 interface IProps {
   authMode: "signin" | "signup";
 }
@@ -23,9 +22,10 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
   const { response: user, loading, callApi, error } = useHttp();
 
   const onSubmit = (data) => {
-    console.log(data);
+    callApi(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${authMode}`, "POST", data);
     //make http request to api and create/login user
   };
+  console.log(user);
 
   const router = useRouter();
   const responseFacebook = (response) => {
@@ -47,6 +47,8 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
 
   return (
     <div className={styles.container}>
+      {loading && <SpinnerWithBackDrop />}
+      <Modal />
       <div className={styles.auth}>
         <img
           className={styles.img}
