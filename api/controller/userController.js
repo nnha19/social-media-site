@@ -38,7 +38,7 @@ const signUpUser = async (req, res) => {
     //     .json("Invalid Input. Please fill all the required fields.");
     //   return;
     // }
-    const { username, email, password } = req.body;
+    const { username, email } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res.status(400).json("User with this email already exists.");
