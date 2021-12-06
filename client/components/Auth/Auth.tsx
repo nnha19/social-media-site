@@ -5,65 +5,59 @@ import { useRouter } from "next/router";
 import styles from "./Auth.module.scss";
 import { useForm } from "react-hook-form";
 import { SpinnerWithBackDrop } from "../Share/Spinner/Spinner";
-import { useHttp } from "../../customHooks/useHttp";
 import ErrorModal from "../Share/ErrorModal/ErrorModal";
 import { useEffect } from "react";
 import { IUser } from "../../types/types";
-
+import { signUpAsyncThunk } from "../../features/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { cancelError } from "../../features/userSlice";
 interface IProps {
   authMode: "signin" | "signup";
 }
-
 const Auth: React.FC<IProps> = ({ authMode }) => {
+  const { loading, error, user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const currentUser: IUser | null = {} as IUser;
-
-  const {
-    response: user,
-    loading,
-    callApi,
-    error,
-    setError,
-  } = useHttp(currentUser);
-
-  const onSubmit = (data) => {
-    //make http request to api and create/login user
-    callApi(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${authMode}`, "POST", data);
-  };
 
   const router = useRouter();
+
+  const onSubmit = (data: IUser) => {
+    dispatch(signUpAsyncThunk({ authMode, data }));
+  };
 
   const responseFacebook = (response) => {
     const {
       accessToken,
       email,
-      name,
+      name: username,
       picture: {
-        data: { url },
+        data: { url: profilePicture },
       },
     } = response;
-    const data = { accessToken, email, name, url };
-    callApi(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/facebook/auth`,
-      "POST",
-      data
-    );
+    const data = { email, username, profilePicture };
+    dispatch(signUpAsyncThunk({ authMode: "facebook/auth", data }));
   };
 
   useEffect(() => {
     if (!user || !user.token) return;
     localStorage.setItem("token", user.token);
+    router.push("/");
   }, [user]);
 
   return (
     <div className={styles.container}>
       {loading && <SpinnerWithBackDrop />}
-      {error && <ErrorModal error={error} closeModal={() => setError(null)} />}
+      {error && (
+        <ErrorModal
+          error={error}
+          closeModal={() => dispatch(cancelError({}))}
+        />
+      )}
       <div className={styles.auth}>
         <img
           className={styles.img}
