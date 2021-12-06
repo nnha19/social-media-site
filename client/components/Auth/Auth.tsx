@@ -6,6 +6,7 @@ import styles from "./Auth.module.scss";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useHttp } from "../../customHooks/useHttp";
+import { useEffect } from "react";
 
 interface IProps {
   authMode: "signin" | "signup";
@@ -22,6 +23,7 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
   const { response: user, loading, callApi, error } = useHttp();
 
   const onSubmit = (data) => {
+    console.log(data);
     //make http request to api and create/login user
   };
 

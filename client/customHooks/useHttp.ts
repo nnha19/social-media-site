@@ -9,9 +9,6 @@ export const useHttp = () => {
   const [error, setError] = useState(false);
 
   const callApi = async (url: string, method: method, data?: object) => {
-    console.log(`url ${url}`);
-    console.log(`method`, method);
-    console.log(`data`, data);
     try {
       setLoading(true);
       const resp: any = await axios({
@@ -19,7 +16,7 @@ export const useHttp = () => {
         method: method,
         data,
       });
-      setResponse(resp);
+      setResponse(resp.data);
       setLoading(false);
     } catch (err) {
       setError(err);
