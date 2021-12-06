@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { SpinnerWithBackDrop } from "../Share/Spinner/Spinner";
 import { useHttp } from "../../customHooks/useHttp";
 import ErrorModal from "../Share/ErrorModal/ErrorModal";
+import { useEffect } from "react";
+import { IUser } from "../../types/types";
 
 interface IProps {
   authMode: "signin" | "signup";
@@ -19,15 +21,23 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
     watch,
     formState: { errors },
   } = useForm();
+  const currentUser: IUser | null = {} as IUser;
 
-  const { response: user, loading, callApi, error, setError } = useHttp();
+  const {
+    response: user,
+    loading,
+    callApi,
+    error,
+    setError,
+  } = useHttp(currentUser);
 
   const onSubmit = (data) => {
-    callApi(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${authMode}`, "POST", data);
     //make http request to api and create/login user
+    callApi(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${authMode}`, "POST", data);
   };
 
   const router = useRouter();
+
   const responseFacebook = (response) => {
     const {
       accessToken,
@@ -44,6 +54,11 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
       data
     );
   };
+
+  useEffect(() => {
+    if (!user || !user.token) return;
+    localStorage.setItem("token", user.token);
+  }, [user]);
 
   return (
     <div className={styles.container}>

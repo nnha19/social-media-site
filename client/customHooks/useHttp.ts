@@ -3,8 +3,8 @@ import React, { useState } from "react";
 
 type method = "GET" | "POST" | "PUT" | "DELETE";
 
-export const useHttp = () => {
-  const [response, setResponse] = useState<[]>();
+export function useHttp<Type>(arg: Type) {
+  const [response, setResponse] = useState(arg);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<false | string>(false);
 
@@ -26,4 +26,4 @@ export const useHttp = () => {
   };
 
   return { response, loading, error, callApi, setError };
-};
+}
