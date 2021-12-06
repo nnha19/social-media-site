@@ -1,12 +1,19 @@
 import BackDrop from "../BackDrop/BackDrop";
 import styles from "./Modal.module.scss";
 
-const Modal = () => {
+interface IProps {
+  title: string;
+  body: JSX.Element;
+  closeModal: () => void;
+}
+
+const Modal: React.FC<IProps> = ({ title, body, closeModal }) => {
   return (
     <div>
-      <BackDrop />
+      <BackDrop onClick={closeModal} />
       <div className={styles.modal}>
-        <h2 className={styles.modalHeader}>Modal Header</h2>
+        <h2 className={styles.modalHeader}>{title}</h2>
+        <div className={styles.modalBody}>{body}</div>
       </div>
     </div>
   );

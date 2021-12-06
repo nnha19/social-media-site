@@ -6,11 +6,21 @@ interface IProps {
   children: React.ReactNode;
   className?: string;
   style?: object;
+  onClick?: () => void;
 }
 
-const PrimaryBtn: React.FC<IProps> = ({ children, className, style }) => {
+const PrimaryBtn: React.FC<IProps> = ({
+  children,
+  className,
+  style,
+  onClick,
+}) => {
   return (
-    <button style={style} className={`${styles.btn} ${className}`}>
+    <button
+      onClick={onClick}
+      style={style}
+      className={`${styles.btn} ${className}`}
+    >
       {children}
     </button>
   );

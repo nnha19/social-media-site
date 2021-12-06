@@ -6,7 +6,8 @@ import styles from "./Auth.module.scss";
 import { useForm } from "react-hook-form";
 import { SpinnerWithBackDrop } from "../Share/Spinner/Spinner";
 import { useHttp } from "../../customHooks/useHttp";
-import Modal from "../Share/Modal/Modal";
+import ErrorModal from "../Share/ErrorModal/ErrorModal";
+
 interface IProps {
   authMode: "signin" | "signup";
 }
@@ -19,13 +20,12 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
     formState: { errors },
   } = useForm();
 
-  const { response: user, loading, callApi, error } = useHttp();
+  const { response: user, loading, callApi, error, setError } = useHttp();
 
   const onSubmit = (data) => {
     callApi(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${authMode}`, "POST", data);
     //make http request to api and create/login user
   };
-  console.log(user);
 
   const router = useRouter();
   const responseFacebook = (response) => {
@@ -48,7 +48,7 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
   return (
     <div className={styles.container}>
       {loading && <SpinnerWithBackDrop />}
-      <Modal />
+      {error && <ErrorModal error={error} closeModal={() => setError(null)} />}
       <div className={styles.auth}>
         <img
           className={styles.img}

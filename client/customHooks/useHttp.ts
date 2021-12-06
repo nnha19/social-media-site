@@ -6,7 +6,7 @@ type method = "GET" | "POST" | "PUT" | "DELETE";
 export const useHttp = () => {
   const [response, setResponse] = useState<[]>();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<false | string>(false);
 
   const callApi = async (url: string, method: method, data?: object) => {
     try {
@@ -19,10 +19,11 @@ export const useHttp = () => {
       setResponse(resp.data);
       setLoading(false);
     } catch (err) {
-      setError(err);
+      setError(err?.response?.data);
+      // setError(err);
       setLoading(false);
     }
   };
 
-  return { response, loading, error, callApi };
+  return { response, loading, error, callApi, setError };
 };
