@@ -11,7 +11,7 @@ import { IUser } from "../../types/types";
 import { signUpAsyncThunk } from "../../features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { cancelError } from "../../features/userSlice";
-import Image from "next/image";
+
 interface IProps {
   authMode: "signin" | "signup";
 }
@@ -60,9 +60,7 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
         />
       )}
       <div className={styles.auth}>
-        <Image
-          height="1000px"
-          width="1000px"
+        <img
           className={styles.img}
           src="https://c8.alamy.com/comp/2EYAJFR/laughing-man-with-phone-chatting-with-his-friends-cartoon-vector-illustration-2EYAJFR.jpg"
         />
