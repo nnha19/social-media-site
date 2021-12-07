@@ -1,4 +1,3 @@
-import { useSomething } from "../../customHooks/useHttp";
 import { IUser } from "../../types/types";
 import withAuth from "../../withAuth/withAuth";
 

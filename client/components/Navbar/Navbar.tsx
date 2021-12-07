@@ -17,9 +17,10 @@ const Navbar = () => {
   const { user } = useAppSelector((state) => state.user);
 
   const router = useRouter();
-  useEffect(() => {
-    if (!user.token) router.push(`/signup`);
-  }, [user]);
+
+  // useEffect(() => {
+  //   if (!user.token) router.push(`/signup`);
+  // }, [user]);
 
   return (
     <nav className={styles.nav}>

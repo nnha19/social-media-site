@@ -2,6 +2,11 @@ const User = require("../Models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+const getAllUsers = async (req, res) => {
+  const allUsers = await User.find({});
+  res.status(200).json(allUsers);
+};
+
 const facebookAuth = async (req, res) => {
   try {
     const {
@@ -94,7 +99,7 @@ const signInUser = async (req, res) => {
     res.status(500).json(err);
   }
 };
-
+exports.getAllUsers = getAllUsers;
 exports.facebookAuth = facebookAuth;
 exports.signUpUser = signUpUser;
 exports.signInUser = signInUser;

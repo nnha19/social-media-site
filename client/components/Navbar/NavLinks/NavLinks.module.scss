@@ -12,6 +12,7 @@
     border-radius: 8px;
     transition: all 0.4s;
     position: relative;
+    border-bottom: 4px solid transparent;
     &::before {
       display: none;
       transition: all 0.4s;

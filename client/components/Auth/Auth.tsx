@@ -11,6 +11,7 @@ import { IUser } from "../../types/types";
 import { signUpAsyncThunk } from "../../features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { cancelError } from "../../features/userSlice";
+import Image from "next/image";
 interface IProps {
   authMode: "signin" | "signup";
 }
@@ -43,11 +44,11 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
     dispatch(signUpAsyncThunk({ authMode: "facebook/auth", data }));
   };
 
-  useEffect(() => {
-    if (!user || !user.token) return;
-    localStorage.setItem("token", user.token);
-    router.push("/");
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user || !user.token) return;
+  //   localStorage.setItem("token", user.token);
+  //   router.push("/");
+  // }, [user]);
 
   return (
     <div className={styles.container}>
@@ -59,7 +60,9 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
         />
       )}
       <div className={styles.auth}>
-        <img
+        <Image
+          height="1000px"
+          width="1000px"
           className={styles.img}
           src="https://c8.alamy.com/comp/2EYAJFR/laughing-man-with-phone-chatting-with-his-friends-cartoon-vector-illustration-2EYAJFR.jpg"
         />

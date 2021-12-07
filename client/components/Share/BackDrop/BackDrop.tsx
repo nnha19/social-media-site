@@ -1,7 +1,7 @@
 import styles from "./BackDrop.module.scss";
 
 interface IProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const BackDrop: React.FC<IProps> = ({ onClick }) => {
