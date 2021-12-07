@@ -6,7 +6,6 @@ import styles from "./Auth.module.scss";
 import { useForm } from "react-hook-form";
 import { SpinnerWithBackDrop } from "../Share/Spinner/Spinner";
 import ErrorModal from "../Share/ErrorModal/ErrorModal";
-import { useEffect } from "react";
 import { IUser } from "../../types/types";
 import { signUpAsyncThunk } from "../../features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";

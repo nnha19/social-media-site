@@ -1,9 +1,10 @@
-import Auth from "../Components/Auth/Auth";
+// import Auth from "../Components/Auth/Auth";
 
 const Signup = () => {
   return (
     <>
-      <Auth authMode="signup" />
+      <h2>Sign UP.</h2>
+      {/* <Auth authMode="signup" /> */}
     </>
   );
 };
