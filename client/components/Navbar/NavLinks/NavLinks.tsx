@@ -7,46 +7,67 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import Link from "next/link";
 import { useAppSelector } from "../../../app/hooks";
 import Avatar from "../../Share/Avatar/Avatar";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Users from "../../Users/Users";
 
-export const PostsLink = () => {
+interface IProps {
+  href: string;
+  icon: JSX.Element;
+}
+
+const NavigateNavLink: React.FC<IProps> = ({ href, icon }) => {
+  const { pathname } = useRouter();
+  let navLinkStyle = styles.navLink;
+  if (pathname === href) {
+    navLinkStyle = `${navLinkStyle} ${styles.activeNavLink}`;
+  }
   return (
-    <Link href="/posts">
-      <li className={styles.navLink}>
-        <AiOutlineHome />
-      </li>
+    <Link href={href}>
+      <li className={navLinkStyle}>{icon}</li>
     </Link>
   );
+};
+
+export const PostsLink = () => {
+  return <NavigateNavLink href="/posts" icon={<AiOutlineHome />} />;
 };
 
 export const MessengerLink = () => {
-  const navLinkStyle = `${styles.activeNavLink} ${styles.navLink}`;
-  return (
-    <Link href="/messenger">
-      <li className={navLinkStyle}>
-        <RiMessengerLine />
-      </li>
-    </Link>
-  );
+  return <NavigateNavLink href="/messenger" icon={<RiMessengerLine />} />;
 };
 
 export const UsersLink = () => {
-  const { user } = useAppSelector((state) => state.user);
-  return (
-    <Link href={`/profile/${user._id}`}>
-      <li className={styles.navLink}>
+  const [showUserDropdown, setShowUserDropDown] = useState(false);
+  const handleToggleDropdown = () => {
+    setShowUserDropDown(!showUserDropdown);
+  };
+
+  const { innerWidth } = window;
+  return innerWidth < 600 ? (
+    <NavigateNavLink href={`/users`} icon={<FiUsers />} />
+  ) : (
+    <div className={styles.usersContainer}>
+      <li onClick={handleToggleDropdown} className={styles.navLink}>
         <FiUsers />
       </li>
-    </Link>
+      {showUserDropdown && <Users />}
+    </div>
   );
 };
 
 export const NotiLink = () => {
-  return (
-    <Link href="/notifications">
-      <li className={styles.navLink}>
-        <IoIosNotificationsOutline />
-      </li>
-    </Link>
+  const { innerWidth } = window;
+
+  return innerWidth < 600 ? (
+    <NavigateNavLink
+      href={`/notifications`}
+      icon={<IoIosNotificationsOutline />}
+    />
+  ) : (
+    <li className={styles.navLink}>
+      <IoIosNotificationsOutline />
+    </li>
   );
 };
 
