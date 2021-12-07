@@ -9,6 +9,7 @@ import {
   MessengerLink,
   NotiLink,
   PostsLink,
+  ProfileLink,
   UsersLink,
 } from "./NavLinks/NavLinks";
 
@@ -22,7 +23,7 @@ const Navbar = () => {
 
   return (
     <nav className={styles.nav}>
-      <div className={styles.logo}>
+      <div className={styles.navLogo}>
         <h1>Logo</h1>
       </div>
       {user && user.token && (
@@ -31,7 +32,7 @@ const Navbar = () => {
           <UsersLink />
           <MessengerLink />
           <NotiLink />
-          <Avatar />
+          <ProfileLink />
         </ul>
       )}
     </nav>

@@ -1,11 +1,16 @@
 import { useAppSelector } from "../../../app/hooks";
 import styles from "./Avatar.module.scss";
-const Avatar = () => {
+
+interface IProps {
+  className?: string;
+  style?: object;
+}
+
+const Avatar: React.FC<IProps> = ({ className, style }) => {
   const { user } = useAppSelector((state) => state.user);
   return (
-    <div className={styles.avatar}>
+    <div style={style} className={`${styles.avatar} ${className}`}>
       <img src={user.profilePicture} />
-      <h4>{user.username}</h4>
     </div>
   );
 };

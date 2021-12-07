@@ -1,10 +1,13 @@
+@import "../../styles/variables";
+
 .nav {
-  height: 4rem;
   background: white;
   display: flex;
+  height: 4rem;
+
   justify-content: space-between;
   align-items: center;
-  padding: 0.4rem 3rem;
+  padding: 0 3rem;
   box-shadow: 0 0.5px grey;
 
   &Links {
@@ -13,5 +16,25 @@
     align-self: stretch;
     display: flex;
     align-items: center;
+  }
+
+  @media (max-width: $smScreen) {
+    padding: 0.4rem 1.5rem;
+  }
+  @media (max-width: $xsScreen) {
+    flex-direction: column;
+    height: max-content;
+  }
+
+  &Logo {
+    @media (max-width: $xsScreen) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &Links {
+    @media (max-width: $xsScreen) {
+      justify-content: space-around;
+    }
   }
 }

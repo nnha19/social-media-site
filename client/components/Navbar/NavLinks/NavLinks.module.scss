@@ -1,18 +1,66 @@
+@import "../../../styles/variables";
+
 .nav {
   &Link {
     margin: 0 0.5rem;
     cursor: pointer;
     padding: 0 1.5rem;
+    font-size: 1.8rem;
     align-self: stretch;
     display: flex;
     align-items: center;
     border-radius: 8px;
     transition: all 0.4s;
-    &:hover {
+    position: relative;
+    &::before {
+      display: none;
+      transition: all 0.4s;
+      content: "";
+      height: 80%;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
       background: rgba(128, 128, 128, 0.3);
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
     }
+    &:hover::before {
+      display: block;
+    }
+
+    @media (max-width: $mdScreen) {
+      font-size: 1.4rem;
+      padding: 0 1rem;
+    }
+
+    @media (max-width: $smScreen) {
+      padding: 0 1rem;
+      margin: 0 0.2rem;
+    }
+
     svg {
-      font-size: 1.8rem;
+      font-size: inherit;
     }
   }
+}
+
+.profileNav {
+  display: flex;
+  align-items: center;
+
+  h4 {
+    @media (max-width: $mdScreen) {
+      display: none;
+    }
+  }
+
+  h4 {
+    margin-left: 1rem;
+  }
+}
+
+.activeNavLink {
+  border-bottom: 4px solid $primaryColor;
+  border-radius: 0 !important;
 }

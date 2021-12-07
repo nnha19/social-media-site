@@ -8,16 +8,6 @@ import Link from "next/link";
 import { useAppSelector } from "../../../app/hooks";
 import Avatar from "../../Share/Avatar/Avatar";
 
-export const NotiLink = () => {
-  return (
-    <Link href="/notifications">
-      <li className={styles.navLink}>
-        <IoIosNotificationsOutline />
-      </li>
-    </Link>
-  );
-};
-
 export const PostsLink = () => {
   return (
     <Link href="/posts">
@@ -29,9 +19,10 @@ export const PostsLink = () => {
 };
 
 export const MessengerLink = () => {
+  const navLinkStyle = `${styles.activeNavLink} ${styles.navLink}`;
   return (
     <Link href="/messenger">
-      <li className={styles.navLink}>
+      <li className={navLinkStyle}>
         <RiMessengerLine />
       </li>
     </Link>
@@ -49,12 +40,23 @@ export const UsersLink = () => {
   );
 };
 
+export const NotiLink = () => {
+  return (
+    <Link href="/notifications">
+      <li className={styles.navLink}>
+        <IoIosNotificationsOutline />
+      </li>
+    </Link>
+  );
+};
+
 export const ProfileLink = () => {
   const { user } = useAppSelector((state) => state.user);
   return (
     <Link href={`/profile/${user._id}`}>
-      <li>
+      <li className={styles.profileNav}>
         <Avatar />
+        <h4>{user.username}</h4>
       </li>
     </Link>
   );
