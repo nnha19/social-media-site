@@ -1,12 +1,16 @@
 import styles from "./Navbar.module.scss";
-import { AiOutlineHome } from "react-icons/ai";
-import { RiMessengerLine } from "react-icons/ri";
-import { IoIosNotificationsOutline } from "react-icons/io";
+
 import { useAppSelector } from "../../app/hooks";
 import Link from "next/link";
 import Avatar from "../Share/Avatar/Avatar";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import {
+  MessengerLink,
+  NotiLink,
+  PostsLink,
+  UsersLink,
+} from "./NavLinks/NavLinks";
 
 const Navbar = () => {
   const { user } = useAppSelector((state) => state.user);
@@ -23,26 +27,11 @@ const Navbar = () => {
       </div>
       {user && user.token && (
         <ul className={styles.navLinks}>
-          <Link href="/posts">
-            <li className={styles.navLink}>
-              <AiOutlineHome />
-            </li>
-          </Link>
-          <Link href="/messenger">
-            <li className={styles.navLink}>
-              <RiMessengerLine />
-            </li>
-          </Link>
-          <Link href="/notifications">
-            <li className={styles.navLink}>
-              <IoIosNotificationsOutline />
-            </li>
-          </Link>
-          <Link href={`/profile/${user._id}`}>
-            <li>
-              <Avatar />
-            </li>
-          </Link>
+          <PostsLink />
+          <UsersLink />
+          <MessengerLink />
+          <NotiLink />
+          <Avatar />
         </ul>
       )}
     </nav>
