@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
+  console.log("Getting all users.");
   const allUsers = await User.find({});
   res.status(200).json(allUsers);
 };

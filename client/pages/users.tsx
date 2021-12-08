@@ -21,6 +21,8 @@ export const getStaticProps = async () => {
     url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`,
     method: "GET",
   });
+  console.log(resp);
+
   return {
     props: { users: resp.data },
   };
