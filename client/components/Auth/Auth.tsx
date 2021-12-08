@@ -10,6 +10,7 @@ import { IUser } from "../../types/types";
 import { signUpAsyncThunk } from "../../features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { cancelError } from "../../features/userSlice";
+import { useEffect } from "react";
 
 interface IProps {
   authMode: "signin" | "signup";
@@ -43,11 +44,11 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
     dispatch(signUpAsyncThunk({ authMode: "facebook/auth", data }));
   };
 
-  // useEffect(() => {
-  //   if (!user || !user.token) return;
-  //   localStorage.setItem("token", user.token);
-  //   router.push("/");
-  // }, [user]);
+  useEffect(() => {
+    if (!user || !user.token) return;
+    localStorage.setItem("token", user.token);
+    router.push("/");
+  }, [user]);
 
   return (
     <div className={styles.container}>

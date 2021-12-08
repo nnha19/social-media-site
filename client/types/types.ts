@@ -5,3 +5,7 @@ export interface IUser {
   profilePicture?: string;
   token?: string;
 }
+
+export interface IUsers {
+  users: IUser[];
+}

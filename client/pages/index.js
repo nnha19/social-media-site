@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useAppSelector } from "../app/hooks";
 
 export default function Home() {

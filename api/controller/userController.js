@@ -1,6 +1,9 @@
 const User = require("../Models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const FriendRequests = require("../Models/FriendRequests");
+
+// User.remove().then((res) => console.log("Done."));
 
 const getAllUsers = async (req, res) => {
   console.log("Getting all users.");
@@ -24,6 +27,7 @@ const facebookAuth = async (req, res) => {
         email,
         profilePicture,
       });
+      await FriendRequests.create({ userId: user._id });
     }
     if (user) {
       const token = jwt.sign({ userId: user._id, email }, process.env.JWT_KEY);
@@ -55,7 +59,11 @@ const signUpUser = async (req, res) => {
         password: hashedPassword,
         username,
       });
+
       const { _id } = newUser;
+      await FriendRequests.create({
+        userId: _id,
+      });
       const token = jwt.sign({ userId: _id, email }, process.env.JWT_KEY);
       const { password, ...others } = newUser.toObject();
       res.status(200).json({ ...others, token });
