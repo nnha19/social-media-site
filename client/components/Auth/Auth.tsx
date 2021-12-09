@@ -32,16 +32,17 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
   };
 
   const responseFacebook = (response) => {
-    const {
-      accessToken,
-      email,
-      name: username,
-      picture: {
-        data: { url: profilePicture },
-      },
-    } = response;
-    const data = { email, username, profilePicture };
-    dispatch(signUpAsyncThunk({ authMode: "facebook/auth", data }));
+    // console.log(response);
+    // const {
+    //   accessToken,
+    //   email,
+    //   name: username,
+    //   picture: {
+    //     data: { url: profilePicture },
+    //   },
+    // } = response;
+    // const data = { email, username, profilePicture };
+    // dispatch(signUpAsyncThunk({ authMode: "facebook/auth", data }));
   };
 
   useEffect(() => {

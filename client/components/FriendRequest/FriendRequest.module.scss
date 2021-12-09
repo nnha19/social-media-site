@@ -1,8 +1,8 @@
 @import "../../styles/variables";
 .requested {
-  background: none;
-  border: 1px solid black;
-  color: unset;
+  background: none !important;
+  border: 1px solid black !important;
+  color: unset !important;
   &:hover {
     color: white;
   }

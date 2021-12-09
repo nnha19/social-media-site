@@ -5,11 +5,11 @@ import { FiUsers } from "react-icons/fi";
 import { RiMessengerLine } from "react-icons/ri";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import Link from "next/link";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import Avatar from "../../Share/Avatar/Avatar";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import Users from "../../Users/Users";
+import { showUsersAction } from "../../../features/usersSlice";
 
 interface IProps {
   href: string;
@@ -38,9 +38,10 @@ export const MessengerLink = () => {
 };
 
 export const UsersLink = () => {
-  const [showUserDropdown, setShowUserDropDown] = useState(false);
-  const handleToggleDropdown = () => {
-    setShowUserDropDown(!showUserDropdown);
+  const { showUsers } = useAppSelector((state) => state.users);
+  const dispatch = useAppDispatch();
+  const handleShowUsers = () => {
+    dispatch(showUsersAction({}));
   };
 
   const { innerWidth } = window;
@@ -48,11 +49,15 @@ export const UsersLink = () => {
     <NavigateNavLink href={`/users`} icon={<FiUsers />} />
   ) : (
     <div className={styles.usersContainer}>
-      <li onClick={handleToggleDropdown} className={styles.navLink}>
+      <li
+        id="users-dropdown"
+        onClick={handleShowUsers}
+        className={styles.navLink}
+      >
         <FiUsers />
       </li>
-      {showUserDropdown && (
-        <div className={styles.users}>
+      {showUsers && (
+        <div id="users" className={styles.users}>
           <Users />
         </div>
       )}
