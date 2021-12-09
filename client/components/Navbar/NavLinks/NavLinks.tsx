@@ -3,7 +3,6 @@ import styles from "./NavLinks.module.scss";
 import { AiOutlineHome } from "react-icons/ai";
 import { FiUsers } from "react-icons/fi";
 import { RiMessengerLine } from "react-icons/ri";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import Avatar from "../../Share/Avatar/Avatar";
@@ -16,7 +15,7 @@ interface IProps {
   icon: JSX.Element;
 }
 
-const NavigateNavLink: React.FC<IProps> = ({ href, icon }) => {
+export const NavigateNavLink: React.FC<IProps> = ({ href, icon }) => {
   const { pathname } = useRouter();
   let navLinkStyle = styles.navLink;
   if (pathname === href) {
@@ -62,21 +61,6 @@ export const UsersLink = () => {
         </div>
       )}
     </div>
-  );
-};
-
-export const NotiLink = () => {
-  const { innerWidth } = window;
-
-  return innerWidth < 600 ? (
-    <NavigateNavLink
-      href={`/notifications`}
-      icon={<IoIosNotificationsOutline />}
-    />
-  ) : (
-    <li className={styles.navLink}>
-      <IoIosNotificationsOutline />
-    </li>
   );
 };
 

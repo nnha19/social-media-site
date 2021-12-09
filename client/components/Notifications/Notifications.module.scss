@@ -1,0 +1,45 @@
+@import "../../styles/variables";
+
+.notis {
+  &Header {
+    font-size: 1.4rem;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  }
+}
+
+.noti {
+  cursor: pointer;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 1rem;
+  &:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+  }
+  &Img {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+  }
+  &Info {
+    line-height: 1.4;
+    margin-left: 1rem;
+  }
+  &Date {
+    color: $primaryColor;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+  &Response {
+    display: flex;
+  }
+  &Btn {
+    border-radius: 5px;
+    &:last-child {
+      margin-left: 0.4rem;
+      background-color: rgba(0, 128, 0, 0.2);
+      color: unset;
+    }
+  }
+}

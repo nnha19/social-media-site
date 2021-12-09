@@ -1,0 +1,64 @@
+@import "../../../styles/variables";
+.nav {
+  &Link {
+    margin: 0 0.5rem;
+    cursor: pointer;
+    padding: 0 1.5rem;
+    font-size: 1.8rem;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    transition: all 0.4s;
+    position: relative;
+    border-bottom: 4px solid transparent;
+    &::before {
+      display: none;
+      transition: all 0.4s;
+      content: "";
+      height: 80%;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: rgba(128, 128, 128, 0.3);
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
+    }
+    &:hover::before {
+      display: block;
+    }
+
+    @media (max-width: $mdScreen) {
+      font-size: 1.4rem;
+      padding: 0 1rem;
+    }
+
+    @media (max-width: $smScreen) {
+      padding: 0 1rem;
+      margin: 0 0.2rem;
+    }
+
+    svg {
+      font-size: inherit;
+    }
+  }
+}
+.notiContainer {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.notis {
+  background-color: white;
+  width: 24rem;
+  position: absolute;
+  top: 4rem;
+  right: 2rem;
+  box-shadow: 0 1px 1px 1px gray;
+  height: 35rem;
+  margin-top: 2rem;
+  border-radius: 4px;
+  overflow-y: auto;
+}

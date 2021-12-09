@@ -7,11 +7,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   MessengerLink,
-  NotiLink,
   PostsLink,
   ProfileLink,
   UsersLink,
 } from "./NavLinks/NavLinks";
+import NotiLink from "./NotiLink/NotiLink";
 
 const Navbar = () => {
   const { user } = useAppSelector((state) => state.user);

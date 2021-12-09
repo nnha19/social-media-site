@@ -9,3 +9,10 @@ export interface IUser {
 export interface IUsers {
   users: IUser[];
 }
+
+export interface INotifications {
+  user: IUser;
+  notification: string;
+  response?: any;
+  date: string;
+}
