@@ -1,0 +1,16 @@
+@import "../../styles/variables";
+.requested {
+  background: none;
+  border: 1px solid black;
+  color: unset;
+  &:hover {
+    color: white;
+  }
+}
+
+.spinner {
+  height: 1.5rem !important;
+  width: 1.5rem !important;
+  position: static !important;
+  margin: 0 auto;
+}

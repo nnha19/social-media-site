@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Link from "next/link";
+
 const MessengerPage = () => {
   const [displayConversation, setDisplayConversation] = useState(false);
+
   return (
     <div>
       This is messenger

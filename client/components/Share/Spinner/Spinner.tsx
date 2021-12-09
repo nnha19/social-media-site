@@ -1,10 +1,10 @@
 import BackDrop from "../BackDrop/BackDrop";
 import styles from "./Spinner.module.scss";
 
-const Spinner = () => {
+const Spinner = ({ className }: { className?: string }) => {
   return (
     <div className={styles.container}>
-      <span className={styles.spinner}></span>
+      <span className={styles.spinner + " " + className}></span>
     </div>
   );
 };

@@ -3,10 +3,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { IUsers } from "../../types/types";
+import FriendRequest from "../FriendRequest/FriendRequest";
 import PrimaryBtn from "../Share/PrimaryBtn/PrimaryBtn";
 import styles from "./Users.module.scss";
 
-interface IUserFriReqs {
+export interface IUserFriReqs {
   userId: string;
   friendRequests: string[];
   sentRequests: string[];
@@ -19,7 +20,6 @@ const Users = () => {
   const [curUserFriReqs, setCurUserFriReqs] = useState<IUserFriReqs>();
   const [loading, setLoading] = useState(false);
   const [secLoading, setSecLoading] = useState(false);
-  const [friReqLoading, setFriReqLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -44,33 +44,29 @@ const Users = () => {
     setSecLoading(false);
   }, [user]);
 
-  const handleFriRequest = async (
-    uid: string,
-    rid: string,
-    alreadySent: boolean
-  ) => {
-    console.log(alreadySent);
-    try {
-      setFriReqLoading(true);
-      const resp = await axios({
-        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${uid}/request/${rid}`,
-        method: alreadySent ? "DELETE" : "POST",
-      });
-      setFriReqLoading(false);
-    } catch (err) {
-      setFriReqLoading(false);
-    }
-  };
+  // const handleFriRequest = async (
+  //   uid: string,
+  //   rid: string,
+  //   alreadySent: boolean
+  // ) => {
+  //   console.log(alreadySent);
+  //   try {
+  //     setFriReqLoading(true);
+  //     const resp = await axios({
+  //       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${uid}/request/${rid}`,
+  //       method: alreadySent ? "DELETE" : "POST",
+  //     });
+  //     setFriReqLoading(false);
+  //   } catch (err) {
+  //     setFriReqLoading(false);
+  //   }
+  // };
 
   const usersList =
     allUsers?.length > 0 &&
     !loading &&
     !secLoading &&
     allUsers.map((u) => {
-      const reqAlreadySent = curUserFriReqs.sentRequests.some(
-        (uid) => uid === u._id
-      );
-
       const handleNavigate = () => {
         router.push(`/profile/${u._id}`);
       };
@@ -87,14 +83,11 @@ const Users = () => {
               {u.username}
             </h2>
             <div className={styles.userBtns}>
-              <PrimaryBtn
-                className={reqAlreadySent && styles.requested}
-                onClick={() => {
-                  handleFriRequest(user._id, u._id, reqAlreadySent);
-                }}
-              >
-                {!reqAlreadySent ? "Add Friend" : "Requested"}
-              </PrimaryBtn>
+              <FriendRequest
+                setCurUserFriReqs={setCurUserFriReqs}
+                recipentId={u._id}
+                curUserFriReqs={curUserFriReqs}
+              />
               <PrimaryBtn>Remove</PrimaryBtn>
             </div>
           </div>

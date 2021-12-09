@@ -17,7 +17,7 @@ const sendFriendRequest = async (req, res) => {
   if (!receiptFriReqs.sentRequests) receiptFriReqs.sentRequests = [];
   receiptFriReqs.friendRequests.push(uid);
   await receiptFriReqs.save();
-  res.status(200).json(receiptFriReqs);
+  res.status(200).json(sender);
 };
 
 const cancelFriRequest = async (req, res) => {
@@ -32,7 +32,7 @@ const cancelFriRequest = async (req, res) => {
   rp.friendRequests = updatedRp;
   await rp.save();
 
-  res.status(200).json("Canceled the request.");
+  res.status(200).json(sender);
 };
 
 exports.getFriendRequests = getFriendRequests;
