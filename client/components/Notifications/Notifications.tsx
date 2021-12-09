@@ -1,24 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PrimaryBtn from "../Share/PrimaryBtn/PrimaryBtn";
 import styles from "./Notifications.module.scss";
 
-const notis = [
-  {
-    username: "Nyi Nyi",
-    action: "Sent you a friend request",
-    type: "friend request",
-  },
-  {
-    username: "Nyi Nyi",
-    action: "Sent you a friend request",
-    date: "1 day ago",
-  },
-  { username: "Nyi Nyi", action: "Sent you a friend request" },
-  { username: "Nyi Nyi", action: "Sent you a friend request" },
-];
-
 const Notifications = () => {
-  const notisList = notis.map((noti) => {
+  const [notifications, setNotifications] = useState();
+
+  const notisList = notifications.map((noti) => {
     let response: JSX.Element;
     if (noti.type === "friend request") {
       response = (

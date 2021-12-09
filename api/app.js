@@ -7,10 +7,13 @@ require("dotenv").config();
 
 const userRoute = require("./routes/userRoute");
 const friendRequestRoute = require("./routes/friendRequestRoute");
+const notificationRoute = require("./routes/notificationRoute");
+
 app.use(cors());
 app.use(express.json());
 app.use(userRoute);
 app.use(friendRequestRoute);
+app.use("/noti", notificationRoute);
 
 const mongoose = require("mongoose");
 
