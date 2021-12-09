@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { IUsers } from "../../types/types";
@@ -12,11 +13,13 @@ interface IUserFriReqs {
 }
 
 const Users = () => {
+  const router = useRouter();
   const { user } = useAppSelector((state) => state.user);
   const [allUsers, setAllUsers] = useState<IUsers["users"]>();
   const [curUserFriReqs, setCurUserFriReqs] = useState<IUserFriReqs>();
   const [loading, setLoading] = useState(false);
   const [secLoading, setSecLoading] = useState(false);
+  const [friReqLoading, setFriReqLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -41,12 +44,22 @@ const Users = () => {
     setSecLoading(false);
   }, [user]);
 
-  const handleAddFriend = async (uid: string, rid: string) => {
-    const resp = await axios({
-      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${uid}/request/${rid}`,
-      method: "POST",
-    });
-    console.log(resp.data);
+  const handleFriRequest = async (
+    uid: string,
+    rid: string,
+    alreadySent: boolean
+  ) => {
+    console.log(alreadySent);
+    try {
+      setFriReqLoading(true);
+      const resp = await axios({
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${uid}/request/${rid}`,
+        method: alreadySent ? "DELETE" : "POST",
+      });
+      setFriReqLoading(false);
+    } catch (err) {
+      setFriReqLoading(false);
+    }
   };
 
   const usersList =
@@ -57,17 +70,30 @@ const Users = () => {
       const reqAlreadySent = curUserFriReqs.sentRequests.some(
         (uid) => uid === u._id
       );
+
+      const handleNavigate = () => {
+        router.push(`/profile/${u._id}`);
+      };
+
       return (
         <div className={styles.user}>
           <img
+            onClick={handleNavigate}
             className={styles.userImg}
             src={`https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80`}
           />
           <div className={styles.userInfo}>
-            <h2 className={styles.userName}>{u.username}</h2>
+            <h2 onClick={handleNavigate} className={styles.userName}>
+              {u.username}
+            </h2>
             <div className={styles.userBtns}>
-              <PrimaryBtn onClick={() => handleAddFriend(user._id, u._id)}>
-                {!reqAlreadySent ? "Add Friend" : "Pending..."}
+              <PrimaryBtn
+                className={reqAlreadySent && styles.requested}
+                onClick={() => {
+                  handleFriRequest(user._id, u._id, reqAlreadySent);
+                }}
+              >
+                {!reqAlreadySent ? "Add Friend" : "Requested"}
               </PrimaryBtn>
               <PrimaryBtn>Remove</PrimaryBtn>
             </div>
@@ -77,7 +103,8 @@ const Users = () => {
     });
 
   return (
-    <div className={styles.users}>
+    <div>
+      <h2 className={styles.usersHeader}>Send Friend Requests</h2>
       {loading || secLoading ? "Loading..." : usersList}
     </div>
   );

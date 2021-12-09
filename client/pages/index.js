@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useAppSelector } from "../app/hooks";
 
 export default function Home() {

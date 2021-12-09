@@ -51,7 +51,11 @@ export const UsersLink = () => {
       <li onClick={handleToggleDropdown} className={styles.navLink}>
         <FiUsers />
       </li>
-      {showUserDropdown && <Users />}
+      {showUserDropdown && (
+        <div className={styles.users}>
+          <Users />
+        </div>
+      )}
     </div>
   );
 };

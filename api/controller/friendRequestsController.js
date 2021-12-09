@@ -20,10 +20,21 @@ const sendFriendRequest = async (req, res) => {
   res.status(200).json(receiptFriReqs);
 };
 
-// const cancelFriRequest = async () => {
-//   const { uid, rid } = req.params;
-//   FriendRequests.find({ userId: uid });
-// };
+const cancelFriRequest = async (req, res) => {
+  const { uid, rid } = req.params;
+  const sender = await FriendRequests.findOne({ userId: uid });
+  const updated = sender.sentRequests.filter((u) => u.toString() !== rid);
+  sender.sentRequests = updated;
+  await sender.save();
+
+  const rp = await FriendRequests.findOne({ userId: rid });
+  const updatedRp = rp.friendRequests.filter((u) => u !== rid);
+  rp.friendRequests = updatedRp;
+  await rp.save();
+
+  res.status(200).json("Canceled the request.");
+};
 
 exports.getFriendRequests = getFriendRequests;
 exports.sendFriendRequest = sendFriendRequest;
+exports.cancelFriRequest = cancelFriRequest;
