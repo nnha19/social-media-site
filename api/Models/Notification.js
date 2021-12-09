@@ -6,7 +6,7 @@ const notificationSchema = new mongoose.Schema({
     {
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       action: { type: String, required: true },
-      response: { type: String },
+      type: { type: String },
       date: { type: String },
     },
   ],

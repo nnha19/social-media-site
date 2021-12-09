@@ -11,8 +11,12 @@ export interface IUsers {
 }
 
 export interface INotifications {
-  user: IUser;
-  notification: string;
-  response?: any;
-  date: string;
+  _id: string;
+  notiOwner: string;
+  notifications: {
+    user: IUser;
+    action: string;
+    type?: string;
+    date: string;
+  }[];
 }

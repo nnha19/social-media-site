@@ -15,6 +15,8 @@ const getNotiByUserId = async (req, res) => {
   }
 };
 
+// Notification.remove().then((res) => console.log("Done."));
+
 const addNoti = async (req, res) => {
   try {
     const { uid } = req.params;
