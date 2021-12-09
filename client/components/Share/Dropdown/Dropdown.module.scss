@@ -1,0 +1,11 @@
+@import "../../../styles/variables";
+.dropdown {
+  height: 35rem;
+  box-shadow: $boxShadow;
+  position: absolute;
+  right: -2rem;
+  top: 6rem;
+  border-radius: 8px;
+  overflow-y: auto;
+  background-color: white;
+}

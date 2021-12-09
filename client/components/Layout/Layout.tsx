@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppDispatch } from "../../app/hooks";
-import { hideUsersAction } from "../../features/usersSlice";
+import { hideDropdownAction } from "../../features/dropdownsSlice";
 import Navbar from "../Navbar/Navbar";
 
 interface IProps {
@@ -9,10 +9,12 @@ interface IProps {
 
 const Layout: React.FC<IProps> = ({ children }) => {
   const dispatch = useAppDispatch();
+
   const handleHideUsers = (e: any) => {
+    console.log("Hello");
     if (e.target.closest("#users-dropdown") || e.target.closest("#users"))
       return;
-    dispatch(hideUsersAction({}));
+    dispatch(hideDropdownAction({}));
   };
 
   return (

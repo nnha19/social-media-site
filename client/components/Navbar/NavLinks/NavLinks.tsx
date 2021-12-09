@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import Avatar from "../../Share/Avatar/Avatar";
 import { useRouter } from "next/router";
 import Users from "../../Users/Users";
-import { showUsersAction } from "../../../features/usersSlice";
+import { showDropdownAction } from "../../../features/dropdownsSlice";
 
 interface IProps {
   href: string;
@@ -37,10 +37,11 @@ export const MessengerLink = () => {
 };
 
 export const UsersLink = () => {
-  const { showUsers } = useAppSelector((state) => state.users);
+  const { usersDropdown } = useAppSelector((state) => state.drodowns);
+
   const dispatch = useAppDispatch();
   const handleShowUsers = () => {
-    dispatch(showUsersAction({}));
+    dispatch(showDropdownAction({ type: "usersDropdown" }));
   };
 
   const { innerWidth } = window;
@@ -55,7 +56,7 @@ export const UsersLink = () => {
       >
         <FiUsers />
       </li>
-      {showUsers && (
+      {usersDropdown && (
         <div id="users" className={styles.users}>
           <Users />
         </div>

@@ -1,14 +1,16 @@
 import styles from "./NotiLink.module.scss";
 
-import { useState } from "react";
 import Notifications from "../../Notifications/Notifications";
 import { NavigateNavLink } from "../NavLinks/NavLinks";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import Dropdown from "../../Share/Dropdown/Dropdown";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { showDropdownAction } from "../../../features/dropdownsSlice";
 
 export const NotiLink = () => {
   const { innerWidth } = window;
-  const [showNotis, setShowNotis] = useState(false);
-
+  const { notiDropdown } = useAppSelector((state) => state.drodowns);
+  const dispatch = useAppDispatch();
   return innerWidth < 600 ? (
     <NavigateNavLink
       href={`/notifications`}
@@ -16,13 +18,16 @@ export const NotiLink = () => {
     />
   ) : (
     <div className={styles.notiContainer}>
-      <li onClick={() => setShowNotis(true)} className={styles.navLink}>
+      <li
+        onClick={() => dispatch(showDropdownAction({ type: "notiDropdown" }))}
+        className={styles.navLink}
+      >
         <IoIosNotificationsOutline />
       </li>
-      {showNotis && (
-        <div className={styles.notis}>
+      {notiDropdown && (
+        <Dropdown>
           <Notifications />
-        </div>
+        </Dropdown>
       )}
     </div>
   );
