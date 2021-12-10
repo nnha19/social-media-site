@@ -5,20 +5,15 @@ const FriendRequests = require("../Models/FriendRequests");
 
 // User.remove().then((res) => console.log("Done."));
 
-const getAllUsers = async (req, res) => {
-  console.log("Getting all users.");
-  const allUsers = await User.find({});
-  res.status(200).json(allUsers);
+const findFriendsToAdd = async (req, res) => {
+  const { uid } = req.params;
+  const users = await User.find({ _id: { $ne: uid } });
+  res.status(200).json(users);
 };
 
 const facebookAuth = async (req, res) => {
   try {
-    const {
-      accessToken,
-      email,
-      name: username,
-      url: profilePicture,
-    } = req.body;
+    const { email, name: username, url: profilePicture } = req.body;
     let user = await User.findOne({ email });
     if (user) {
     } else {
@@ -108,7 +103,7 @@ const signInUser = async (req, res) => {
     res.status(500).json(err);
   }
 };
-exports.getAllUsers = getAllUsers;
+exports.findFriendsToAdd = findFriendsToAdd;
 exports.facebookAuth = facebookAuth;
 exports.signUpUser = signUpUser;
 exports.signInUser = signInUser;

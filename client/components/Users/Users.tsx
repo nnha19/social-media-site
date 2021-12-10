@@ -22,6 +22,7 @@ const Users = () => {
   const [secLoading, setSecLoading] = useState(false);
 
   useEffect(() => {
+    //fetch current users' friend requests and recieved requests.
     setLoading(true);
     (async () => {
       const resp = await axios({
@@ -33,10 +34,11 @@ const Users = () => {
   }, [user]);
 
   useEffect(() => {
+    //Fetch users who are not friends to add as friend
     setSecLoading(true);
     (async () => {
       const resp = await axios({
-        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`,
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user._id}`,
         method: "GET",
       });
       setAllUsers(resp.data);
