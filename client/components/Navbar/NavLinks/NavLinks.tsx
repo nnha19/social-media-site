@@ -48,16 +48,12 @@ export const UsersLink = () => {
   return innerWidth < 600 ? (
     <NavigateNavLink href={`/users`} icon={<FiUsers />} />
   ) : (
-    <div className={styles.usersContainer}>
-      <li
-        id="users-dropdown"
-        onClick={handleShowUsers}
-        className={styles.navLink}
-      >
+    <div id="usersDropdown" className={styles.usersContainer}>
+      <li onClick={handleShowUsers} className={styles.navLink}>
         <FiUsers />
       </li>
       {usersDropdown && (
-        <div id="users" className={styles.users}>
+        <div className={styles.users}>
           <Users />
         </div>
       )}

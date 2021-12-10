@@ -10,6 +10,7 @@ import { showDropdownAction } from "../../../features/dropdownsSlice";
 export const NotiLink = () => {
   const { innerWidth } = window;
   const { notiDropdown } = useAppSelector((state) => state.drodowns);
+
   const dispatch = useAppDispatch();
   return innerWidth < 600 ? (
     <NavigateNavLink
@@ -17,9 +18,13 @@ export const NotiLink = () => {
       icon={<IoIosNotificationsOutline />}
     />
   ) : (
-    <div className={styles.notiContainer}>
+    <div id="notiDropdown" className={styles.notiContainer}>
       <li
-        onClick={() => dispatch(showDropdownAction({ type: "notiDropdown" }))}
+        onClick={() =>
+          dispatch(
+            showDropdownAction({ type: "notiDropdown", id: "notifications" })
+          )
+        }
         className={styles.navLink}
       >
         <IoIosNotificationsOutline />

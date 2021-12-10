@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { hideDropdownAction } from "../../features/dropdownsSlice";
 import Navbar from "../Navbar/Navbar";
 
@@ -8,13 +8,19 @@ interface IProps {
 }
 
 const Layout: React.FC<IProps> = ({ children }) => {
+  const dropdowns = useAppSelector((state) => state.drodowns);
   const dispatch = useAppDispatch();
 
   const handleHideUsers = (e: any) => {
-    console.log("Hello");
-    if (e.target.closest("#users-dropdown") || e.target.closest("#users"))
-      return;
-    dispatch(hideDropdownAction({}));
+    for (let key in dropdowns) {
+      if (dropdowns[key]) {
+        if (e.target.closest(`#${dropdowns[key]}`)) {
+          return;
+        } else {
+          dispatch(hideDropdownAction({}));
+        }
+      }
+    }
   };
 
   return (

@@ -15,12 +15,11 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     hideDropdownAction(state, action) {
-      console.log("Wayy.");
       state.usersDropdown = false;
       state.notiDropdown = false;
     },
     showDropdownAction(state, action) {
-      state[action.payload.type] = true;
+      state[action.payload.type] = action.payload.type;
     },
   },
 });
