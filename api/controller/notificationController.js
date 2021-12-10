@@ -44,10 +44,21 @@ const addNoti = async (req, res) => {
 
 const deleteNoti = (req, res) => {
   try {
+    const { uid, rid } = req.body;
+    Notification.findOne({
+      notiOwner: rid,
+    }).then((resp) => {
+      const result = resp.notifications.filter(
+        (noti) => noti.user.toString() !== uid
+      );
+      resp.notifications = result;
+      resp.save().then(() => {});
+      res.status(200).json("Success.");
+    });
   } catch (err) {
     res.status(400).json(err);
   }
 };
-
 exports.getNotiByUserId = getNotiByUserId;
 exports.addNoti = addNoti;
+exports.deleteNoti = deleteNoti;

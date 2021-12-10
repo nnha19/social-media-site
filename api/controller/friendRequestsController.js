@@ -34,34 +34,34 @@ const sendFriendRequest = async (req, res) => {
   res.status(200).json(sender);
 };
 
-var ObjectId = require("mongoose").Types.ObjectId;
-
 const cancelFriRequest = async (req, res) => {
-  const { uid, rid } = req.params;
-  const sender = await FriendRequests.findOne({ userId: uid });
-  const updated = sender.sentRequests.filter((u) => u.toString() !== rid);
-  sender.sentRequests = updated;
-  await sender.save();
+  try {
+    const { uid, rid } = req.params;
+    const sender = await FriendRequests.findOne({ userId: uid });
+    const updated = sender.sentRequests.filter((u) => u.toString() !== rid);
+    sender.sentRequests = updated;
+    await sender.save();
 
-  const rp = await FriendRequests.findOne({ userId: rid });
-  const updatedRp = rp.friendRequests.filter((u) => u.toString() !== uid);
-  rp.friendRequests = updatedRp;
-  await rp.save();
+    const rp = await FriendRequests.findOne({ userId: rid });
+    const updatedRp = rp.friendRequests.filter((u) => u.toString() !== uid);
+    rp.friendRequests = updatedRp;
+    await rp.save();
 
-  // When friend request is canceled, go delete the
-  //  notification so the recipent can no longer accept the
-  //  cancelled fri request.
-  const notis = Notification.findOne({
-    notiOwner: rid,
-  }).then((res) => {
-    const result = res.notifications.filter(
-      (noti) => noti.user.toString() !== uid
-    );
-    res.notifications = result;
-    res.save().then(() => {});
-  });
-
-  res.status(200).json(sender);
+    // When friend request is canceled, go delete the
+    //  notification so the recipent can no longer accept the
+    //  cancelled fri request.
+    const resp = await axios({
+      url: `http://localhost:5000/noti`,
+      method: "DELETE",
+      data: {
+        uid,
+        rid,
+      },
+    });
+    res.status(200).json(sender);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.getFriendRequests = getFriendRequests;

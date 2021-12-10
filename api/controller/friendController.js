@@ -13,6 +13,8 @@ const getFriendsOfAUser = async (req, res) => {
 
 const becomeFriend = async (req, res) => {
   try {
+    //user 1 is the one who accepted the fri req.
+    // user 2 should receive notification.
     const { user1, user2 } = req.body;
 
     async function makeFriend(userId, friend) {
