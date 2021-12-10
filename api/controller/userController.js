@@ -21,12 +21,10 @@ const findFriendsToAdd = async (req, res) => {
   while (receivedReqs.length !== users.length) {
     receivedReqs.push(null);
   }
-  console.log(receivedReqs);
   users = users.filter((user, index) => {
     if (!receivedReqs[index]) return true;
     return user._id.toString() !== receivedReqs[index].toString();
   });
-  console.log(users);
   res.status(200).json(users);
 };
 

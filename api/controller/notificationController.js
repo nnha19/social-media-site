@@ -42,5 +42,12 @@ const addNoti = async (req, res) => {
   }
 };
 
+const deleteNoti = (req, res) => {
+  try {
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
 exports.getNotiByUserId = getNotiByUserId;
 exports.addNoti = addNoti;
