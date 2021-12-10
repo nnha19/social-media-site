@@ -52,7 +52,7 @@ const cancelFriRequest = async (req, res) => {
   //  notification so the recipent can no longer accept the
   //  cancelled fri request.
   const notis = Notification.findOne({
-    notiOwner: "61b33cac3fb1dddade2b29e6",
+    notiOwner: rid,
   }).then((res) => {
     const result = res.notifications.filter(
       (noti) => noti.user.toString() !== uid
