@@ -1,6 +1,6 @@
 import styles from "./FriendRequest.module.scss";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import PrimaryBtn from "../Share/PrimaryBtn/PrimaryBtn";
 import { IUserFriReqs } from "../Users/Users";

@@ -1,8 +1,9 @@
 const FriendRequests = require("../Models/FriendRequests");
+const axios = require("axios");
+
 const getFriendRequests = async (req, res) => {
   const { uid } = req.params;
   const userFriReqs = await FriendRequests.findOne({ userId: uid });
-  console.log(userFriReqs);
   res.status(200).json(userFriReqs);
 };
 
@@ -17,6 +18,18 @@ const sendFriendRequest = async (req, res) => {
   if (!receiptFriReqs.sentRequests) receiptFriReqs.sentRequests = [];
   receiptFriReqs.friendRequests.push(uid);
   await receiptFriReqs.save();
+
+  //Send notification to the user who just received a friend request
+  const resp = await axios({
+    url: `http://localhost:5000/noti/${rid}`,
+    method: "POST",
+    data: {
+      action: "sent you a friend request",
+      type: "friend request",
+      user: uid,
+    },
+  });
+
   res.status(200).json(sender);
 };
 
