@@ -6,8 +6,27 @@ const FriendRequests = require("../Models/FriendRequests");
 // User.remove().then((res) => console.log("Done."));
 
 const findFriendsToAdd = async (req, res) => {
+  //Get all users, filter out the current user and the users
+  //  that are already friends with current user.
+
   const { uid } = req.params;
-  const users = await User.find({ _id: { $ne: uid } });
+  const userFriReqs = await FriendRequests.findOne({ userId: uid });
+  let receivedReqs = userFriReqs.friendRequests;
+  receivedReqs = receivedReqs.map((u) => u.toString());
+  let users = await User.find({});
+  users = users.filter((user) => {
+    return user._id.toString() !== uid.toString();
+  });
+
+  while (receivedReqs.length !== users.length) {
+    receivedReqs.push(null);
+  }
+  console.log(receivedReqs);
+  users = users.filter((user, index) => {
+    if (!receivedReqs[index]) return true;
+    return user._id.toString() !== receivedReqs[index].toString();
+  });
+  console.log(users);
   res.status(200).json(users);
 };
 

@@ -51,6 +51,12 @@ const userSlice = createSlice({
     cancelError: (state, action) => {
       state.error = false;
     },
+    signInAction(state, action) {
+      state.user = action.payload;
+    },
+    signOutAction(state, action) {
+      state.user = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signUpAsyncThunk.fulfilled, (state, action) => {
@@ -67,5 +73,5 @@ const userSlice = createSlice({
     });
   },
 });
-export const { cancelError } = userSlice.actions;
+export const { cancelError, signInAction, signOutAction } = userSlice.actions;
 export default userSlice.reducer;

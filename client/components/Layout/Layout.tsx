@@ -1,6 +1,8 @@
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { hideDropdownAction } from "../../features/dropdownsSlice";
+import { signInAction } from "../../features/userSlice";
 import Navbar from "../Navbar/Navbar";
 
 interface IProps {
@@ -8,7 +10,9 @@ interface IProps {
 }
 
 const Layout: React.FC<IProps> = ({ children }) => {
+  const router = useRouter();
   const dropdowns = useAppSelector((state) => state.drodowns);
+  const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const handleHideUsers = (e: any) => {
@@ -22,6 +26,14 @@ const Layout: React.FC<IProps> = ({ children }) => {
       }
     }
   };
+
+  useEffect(() => {
+    let user = localStorage.getItem("user");
+    if (!user) return;
+    user = JSON.parse(user);
+    dispatch(signInAction(user));
+    router.push("/posts");
+  }, []);
 
   return (
     <div onClick={handleHideUsers} className="wrapper">

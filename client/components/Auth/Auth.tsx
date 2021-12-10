@@ -47,7 +47,7 @@ const Auth: React.FC<IProps> = ({ authMode }) => {
 
   useEffect(() => {
     if (!user || !user.token) return;
-    localStorage.setItem("token", user.token);
+    localStorage.setItem("user", JSON.stringify(user));
     router.push("/");
   }, [user]);
 
