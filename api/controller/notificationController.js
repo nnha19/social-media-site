@@ -1,4 +1,5 @@
 const Notification = require("../Models/Notification");
+// Notification.remove().then((res) => console.log("Done."));
 
 const getNotiByUserId = async (req, res) => {
   try {
@@ -14,8 +15,6 @@ const getNotiByUserId = async (req, res) => {
     console.log(err);
   }
 };
-
-// Notification.remove().then((res) => console.log("Done."));
 
 const addNoti = async (req, res) => {
   try {
@@ -55,10 +54,23 @@ const notiForAcceptingFriendRequest = async (req, res) => {
       }
       return n;
     });
-    console.log(updatedNotis);
     noti.notifications = updatedNotis;
     await noti.save();
-    res.status(200).json(noti);
+
+    // Notify other user that his friend req is being accepted.
+    let senderNoti = await Notification.findOne({ notiOwner: user });
+    if (!senderNoti) {
+      senderNoti = await Notification.create({
+        notiOwner: user,
+        notifications: [],
+      });
+    }
+    senderNoti.notifications.push({
+      user: accepter,
+      action: ` accepted your friend request`,
+    });
+    await senderNoti.save();
+    res.status(200).json("Succeded.");
   } catch (err) {
     console.log(err);
     res.status(400).json(err);

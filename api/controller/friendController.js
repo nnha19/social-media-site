@@ -1,4 +1,7 @@
 const Friends = require("../Models/Friends");
+const axios = require("axios");
+
+// Friends.remove((r) => console.log("Removed"));
 
 const getFriendsOfAUser = async (req, res) => {
   try {
@@ -30,10 +33,18 @@ const becomeFriend = async (req, res) => {
     }
     makeFriend(user1, user2);
     makeFriend(user2, user1);
+    // Update the accepter noti and send noti to let other know his req
+    // got accepted
+    const resp = await axios({
+      method: "POST",
+      url: `http://localhost:5000/noti/accepted-fri-req`,
+      data: {
+        accepter: user1,
+        user: user2,
+      },
+    });
 
     res.status(200).json("Great.");
-    // Send notification to let other user know that this
-    //  user has accepted friend request
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
