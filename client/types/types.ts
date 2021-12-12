@@ -18,5 +18,7 @@ export interface INotifications {
     action: string;
     type?: string;
     date: string;
+    responded?: string;
+    _id: string;
   }[];
 }

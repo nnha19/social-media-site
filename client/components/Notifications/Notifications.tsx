@@ -20,6 +20,22 @@ const Notifications = () => {
     })();
   }, [user._id]);
 
+  const handleAcceptFriReq = (notiParam) => {
+    let clonedNoti = [...noti.notifications];
+    clonedNoti = clonedNoti.map((n) => {
+      if (n._id === notiParam._id) {
+        return {
+          ...n,
+          responded: "You accepted this request",
+        };
+      }
+      return n;
+    });
+    const updatedNoti = { ...noti };
+    updatedNoti.notifications = clonedNoti;
+    setNoti(updatedNoti);
+  };
+
   const notisList =
     noti?.notifications &&
     noti.notifications.map((n) => {
@@ -27,7 +43,12 @@ const Notifications = () => {
       if (n.type === "friend request") {
         response = (
           <div className={styles.notiResponse}>
-            <PrimaryBtn className={styles.notiBtn}>Accept</PrimaryBtn>
+            <PrimaryBtn
+              onClick={() => handleAcceptFriReq(n)}
+              className={styles.notiBtn}
+            >
+              Accept
+            </PrimaryBtn>
             <PrimaryBtn className={styles.notiBtn}>Decline</PrimaryBtn>
           </div>
         );
@@ -43,7 +64,7 @@ const Notifications = () => {
             <p>
               <strong>{n.user.username}</strong> {n.action}
               <p className={styles.notiDate}>{n.date}</p>
-              {response}
+              {n.responded ? <p>{n.responded}</p> : response}
             </p>
           </div>
         </div>
