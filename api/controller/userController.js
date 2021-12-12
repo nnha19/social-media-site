@@ -2,22 +2,32 @@ const User = require("../Models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const FriendRequests = require("../Models/FriendRequests");
+const Friends = require("../Models/Friends");
 
 // User.remove().then((res) => console.log("Done."));
 
 const findFriendsToAdd = async (req, res) => {
-  //Get all users, filter out the current user and the users
-  //  that are already friends with current user.
+  try {
+    const { uid } = req.params;
+    const userFriReqs = await FriendRequests.findOne({ userId: uid });
+    const userFriends = await Friends.findOne({ userId: uid });
 
-  const { uid } = req.params;
-  const userFriReqs = await FriendRequests.findOne({ userId: uid });
-  const notEquals = [...userFriReqs.friendRequests, uid];
+    const notEquals = [
+      ...userFriReqs.friendRequests,
+      ...userFriends.friends,
+      uid,
+    ];
 
-  const users = await User.find({
-    _id: { $nin: notEquals },
-  });
-
-  res.status(200).json(users);
+    const users = await User.find({
+      _id: { $nin: notEquals },
+    });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+  //Get all users, exclude the current user, the users
+  //  who already sent fri req to the current user and
+  //  the users that are already friends with current user.
 };
 
 const facebookAuth = async (req, res) => {

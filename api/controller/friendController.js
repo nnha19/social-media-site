@@ -1,12 +1,16 @@
 const Friends = require("../Models/Friends");
+const FriendRequests = require("../Models/FriendRequests");
 const axios = require("axios");
 
 // Friends.remove((r) => console.log("Removed"));
+// FriendRequests.remove((r) => console.log("Removed"));
 
 const getFriendsOfAUser = async (req, res) => {
   try {
     const { uid } = req.params;
-    const friends = await Friends.findOne({ userId: uid });
+    const friends = await Friends.findOne({ userId: uid }).populate({
+      path: "friends",
+    });
     res.status(200).json(friends);
   } catch (err) {
     console.log(err);
@@ -43,6 +47,25 @@ const becomeFriend = async (req, res) => {
         user: user2,
       },
     });
+    //
+    const recipentRequests = await FriendRequests.findOne({
+      userId: user1,
+    });
+    const updatedRequests = recipentRequests.friendRequests.filter(
+      (rqs) => rqs.toString() !== user2
+    );
+    recipentRequests.friendRequests = updatedRequests;
+    await recipentRequests.save();
+
+    //
+    const senderReqs = await FriendRequests.findOne({
+      userId: user2,
+    });
+    const sentRequests = senderReqs.sentRequests.filter(
+      (rqs) => rqs.toString() !== user1
+    );
+    senderReqs.sentRequests = sentRequests;
+    await senderReqs.save();
 
     res.status(200).json("Great.");
   } catch (err) {
@@ -54,7 +77,6 @@ const becomeFriend = async (req, res) => {
 const unFriend = async (req, res) => {
   try {
     const { user1, user2 } = req.body;
-
     async function unFriFunc(u1, u2) {
       let user = await Friends.findOne({ userId: u1 });
       const userFriends = user.friends.filter((f) => f.toString() !== u2);
