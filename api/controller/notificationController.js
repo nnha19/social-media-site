@@ -42,6 +42,29 @@ const addNoti = async (req, res) => {
   }
 };
 
+const notiForAcceptingFriendRequest = async (req, res) => {
+  try {
+    const { accepter, user } = req.body;
+    const noti = await Notification.findOne({ notiOwner: accepter });
+    const updatedNotis = noti.notifications.map((n) => {
+      if (n.user.toString() === user) {
+        return {
+          ...n.toObject(),
+          responded: "You accepted this friend request",
+        };
+      }
+      return n;
+    });
+    console.log(updatedNotis);
+    noti.notifications = updatedNotis;
+    await noti.save();
+    res.status(200).json(noti);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+};
+
 const deleteNoti = (req, res) => {
   try {
     const { uid, rid } = req.body;
@@ -62,3 +85,4 @@ const deleteNoti = (req, res) => {
 exports.getNotiByUserId = getNotiByUserId;
 exports.addNoti = addNoti;
 exports.deleteNoti = deleteNoti;
+exports.notiForAcceptingFriendRequest = notiForAcceptingFriendRequest;

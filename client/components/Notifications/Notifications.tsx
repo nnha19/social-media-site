@@ -20,7 +20,7 @@ const Notifications = () => {
     })();
   }, [user._id]);
 
-  const handleAcceptFriReq = (notiParam) => {
+  const handleAcceptFriReq = async (notiParam) => {
     let clonedNoti = [...noti.notifications];
     clonedNoti = clonedNoti.map((n) => {
       if (n._id === notiParam._id) {
@@ -34,6 +34,16 @@ const Notifications = () => {
     const updatedNoti = { ...noti };
     updatedNoti.notifications = clonedNoti;
     setNoti(updatedNoti);
+    // Send request to backend
+    const resp = await axios({
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/friend`,
+      method: "POST",
+      data: {
+        user1: user._id,
+        user2: notiParam.user._id,
+      },
+    });
+    console.log(resp);
   };
 
   const notisList =

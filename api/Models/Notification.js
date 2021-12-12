@@ -8,7 +8,7 @@ const notificationSchema = new mongoose.Schema({
       action: { type: String, required: true },
       type: { type: String },
       date: { type: String },
-      responded: { String },
+      responded: { type: String },
     },
   ],
 });
