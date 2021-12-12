@@ -6,6 +6,7 @@ router.post(
   "/accepted-fri-req",
   notificationController.notiForAcceptingFriendRequest
 );
+router.put("/:nid", notificationController.update);
 router.post("/:uid", notificationController.addNoti);
 router.delete("/", notificationController.deleteNoti);
 

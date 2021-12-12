@@ -34,6 +34,7 @@ const Notifications = () => {
     const updatedNoti = { ...noti };
     updatedNoti.notifications = clonedNoti;
     setNoti(updatedNoti);
+
     // Send request to backend
     const resp = await axios({
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/friend`,
@@ -43,7 +44,7 @@ const Notifications = () => {
         user2: notiParam.user._id,
       },
     });
-    console.log(resp);
+    // Notify other user and update curUser's notification
   };
 
   const notisList =

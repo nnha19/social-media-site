@@ -39,14 +39,14 @@ const becomeFriend = async (req, res) => {
     makeFriend(user2, user1);
     // Update the accepter noti and send noti to let other know his req
     // got accepted
-    const resp = await axios({
-      method: "POST",
-      url: `http://localhost:5000/noti/accepted-fri-req`,
-      data: {
-        accepter: user1,
-        user: user2,
-      },
-    });
+    // const resp = await axios({
+    //   method: "POST",
+    //   url: `http://localhost:5000/noti/accepted-fri-req`,
+    //   data: {
+    //     accepter: user1,
+    //     user: user2,
+    //   },
+    // });
     //
     const recipentRequests = await FriendRequests.findOne({
       userId: user1,

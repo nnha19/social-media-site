@@ -41,6 +41,16 @@ const addNoti = async (req, res) => {
   }
 };
 
+const updateNoti = (req, res) => {
+  try {
+    const { nid } = req.params;
+    Notification.findByIdAndUpdate();
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+};
+
 const notiForAcceptingFriendRequest = async (req, res) => {
   try {
     const { accepter, user } = req.body;
@@ -98,3 +108,4 @@ exports.getNotiByUserId = getNotiByUserId;
 exports.addNoti = addNoti;
 exports.deleteNoti = deleteNoti;
 exports.notiForAcceptingFriendRequest = notiForAcceptingFriendRequest;
+exports.updateNoti = updateNoti;
